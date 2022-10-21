@@ -24,7 +24,7 @@ public class TennisGame1 implements TennisGame {
 
         if (isGameAfterDeuce())
             return getScoreAfterDeuce();
-    
+
         return getScoreBeforeDeuce();
     }
 
@@ -38,30 +38,22 @@ public class TennisGame1 implements TennisGame {
 
 
     private String getScoreBeforeDeuce() {
-        String score = "";
-        int tempScore = 0;
-        for (int i = 1; i < 3; i++) {
-            if (i == 1) tempScore = player1Points;
-            else {
-                score += "-";
-                tempScore = player2Points;
-            }
-            switch (tempScore) {
-                case 0:
-                    score += "Love";
-                    break;
-                case 1:
-                    score += "Fifteen";
-                    break;
-                case 2:
-                    score += "Thirty";
-                    break;
-                case 3:
-                    score += "Forty";
-                    break;
-            }
+        return getScoreLiteral(player1Points) + "-" + getScoreLiteral(player2Points);
+    }
+
+    private String getScoreLiteral(int points) {
+        switch (points) {
+            case 0:
+                return "Love";
+            case 1:
+                return "Fifteen";
+            case 2:
+                return "Thirty";
+            case 3:
+                return "Forty";
+
         }
-        return score;
+        return "";
     }
 
     private String getScoreAfterDeuce() {
