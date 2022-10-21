@@ -38,10 +38,10 @@ public class TennisGame1 implements TennisGame {
 
 
     private String getScoreBeforeDeuce() {
-        return getScoreLiteral(player1Points) + "-" + getScoreLiteral(player2Points);
+        return getPointLiteral(player1Points) + "-" + getPointLiteral(player2Points);
     }
 
-    private String getScoreLiteral(int points) {
+    private String getPointLiteral(int points) {
         switch (points) {
             case 0:
                 return "Love";
@@ -72,15 +72,7 @@ public class TennisGame1 implements TennisGame {
     }
 
     private String getScoreForTiedGame() {
-        switch (player1Points) {
-            case 0:
-                return "Love-All";
-            case 1:
-                return "Fifteen-All";
-            case 2:
-                return "Thirty-All";
-            default:
-                return "Deuce";
-        }
+        if (player1Points > 2) return "Deuce";
+        return getPointLiteral(player1Points) + "-All";
     }
 }
