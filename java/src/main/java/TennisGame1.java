@@ -1,8 +1,8 @@
 
 public class TennisGame1 implements TennisGame {
 
-    private int m_score1 = 0;
-    private int m_score2 = 0;
+    private int player1Points = 0;
+    private int player2Points = 0;
     private String player1Name;
     private String player2Name;
 
@@ -13,31 +13,38 @@ public class TennisGame1 implements TennisGame {
 
     public void wonPoint(String playerName) {
         if (playerName == "player1")
-            m_score1 += 1;
+            player1Points += 1;
         else
-            m_score2 += 1;
+            player2Points += 1;
     }
 
     public String getScore() {
-        String score = "";
-        if (m_score1 == m_score2) {
-            score = getScoreIfTied();
-        } else if (m_score1 >= 4 || m_score2 >= 4) {
-            score = getScoreAfterDeuce();
-        } else {
-            score = getScoreBeforeDeuce();
-        }
-        return score;
+        if (isGameTied())
+            return getScoreForTiedGame();
+
+        if (isGameAfterDeuce())
+            return getScoreAfterDeuce();
+    
+        return getScoreBeforeDeuce();
     }
+
+    private boolean isGameTied() {
+        return player1Points == player2Points;
+    }
+
+    private boolean isGameAfterDeuce() {
+        return player1Points >= 4 || player2Points >= 4;
+    }
+
 
     private String getScoreBeforeDeuce() {
         String score = "";
         int tempScore = 0;
         for (int i = 1; i < 3; i++) {
-            if (i == 1) tempScore = m_score1;
+            if (i == 1) tempScore = player1Points;
             else {
                 score += "-";
-                tempScore = m_score2;
+                tempScore = player2Points;
             }
             switch (tempScore) {
                 case 0:
@@ -59,7 +66,7 @@ public class TennisGame1 implements TennisGame {
 
     private String getScoreAfterDeuce() {
         String score;
-        int minusResult = m_score1 - m_score2;
+        int minusResult = player1Points - player2Points;
         if (minusResult == 1) score = "Advantage player1";
         else if (minusResult == -1) score = "Advantage player2";
         else if (minusResult >= 2) score = "Win for player1";
@@ -67,9 +74,9 @@ public class TennisGame1 implements TennisGame {
         return score;
     }
 
-    private String getScoreIfTied() {
+    private String getScoreForTiedGame() {
         String score;
-        switch (m_score1) {
+        switch (player1Points) {
             case 0:
                 score = "Love-All";
                 break;
